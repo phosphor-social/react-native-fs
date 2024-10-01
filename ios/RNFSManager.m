@@ -766,16 +766,8 @@ RCT_EXPORT_METHOD(getFSInfo:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromise
  */
 RCT_EXPORT_METHOD(copyAssetsFileIOS: (NSString *) imageUri
                   toFilepath: (NSString *) destination
-                  width: (NSInteger) width
-                  height: (NSInteger) height
-                  scale: (CGFloat) scale
-                  compression: (CGFloat) compression
-                  resizeMode: (RCTResizeMode) resizeMode
                   resolver: (RCTPromiseResolveBlock) resolve
-                  rejecter: (RCTPromiseRejectBlock) reject)
-
-{
-    CGSize size = CGSizeMake(width, height);
+                  rejecter: (RCTPromiseRejectBlock) reject) {
 
     NSURL* url = [NSURL URLWithString:imageUri];
     PHFetchResult *results = nil;
@@ -801,44 +793,26 @@ RCT_EXPORT_METHOD(copyAssetsFileIOS: (NSString *) imageUri
     // Allow us to fetch images from iCloud
     imageOptions.networkAccessAllowed = YES;
 
-
     // Note: PhotoKit defaults to a deliveryMode of PHImageRequestOptionsDeliveryModeOpportunistic
     // which means it may call back multiple times - we probably don't want that
     imageOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
 
-    BOOL useMaximumSize = CGSizeEqualToSize(size, CGSizeZero);
-    CGSize targetSize;
-    if (useMaximumSize) {
-        targetSize = PHImageManagerMaximumSize;
-        imageOptions.resizeMode = PHImageRequestOptionsResizeModeNone;
-    } else {
-        targetSize = CGSizeApplyAffineTransform(size, CGAffineTransformMakeScale(scale, scale));
-        imageOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
-    }
+    // Keep aspect ratio of the original image
+    CGSize targetSize = PHImageManagerMaximumSize;
+    imageOptions.resizeMode = PHImageRequestOptionsResizeModeNone;
 
-    PHImageContentMode contentMode = PHImageContentModeAspectFill;
-    if (resizeMode == RCTResizeModeContain) {
-        contentMode = PHImageContentModeAspectFit;
-    }
-
-    // PHImageRequestID requestID =
-    [[PHImageManager defaultManager] requestImageForAsset:asset
-                                               targetSize:targetSize
-                                              contentMode:contentMode
-                                                  options:imageOptions
-                                            resultHandler:^(UIImage *result, NSDictionary<NSString *, id> *info) {
-        if (result) {
-
-            NSData *imageData = UIImageJPEGRepresentation(result, compression );
+    [[PHImageManager defaultManager] requestImageDataForAsset:asset
+                                                      options:imageOptions
+                                                resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        if (imageData) {
+            // Write the image data directly to the destination path
             [imageData writeToFile:destination atomically:YES];
             resolve(destination);
-
         } else {
             NSMutableDictionary* details = [NSMutableDictionary dictionary];
-            [details setValue:info[PHImageErrorKey] forKey:NSLocalizedDescriptionKey];
+            [details setValue:@"Failed to fetch image data" forKey:NSLocalizedDescriptionKey];
             NSError *error = [NSError errorWithDomain:@"RNFS" code:501 userInfo:details];
             [self reject: reject withError:error];
-
         }
     }];
 }

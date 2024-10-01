@@ -229,12 +229,7 @@ export function copyFileRes(
  */
 export function copyAssetsFileIOS(
 	imageUri: string,
-	destPath: string,
-	width: number,
-	height: number,
-	scale?: number,
-	compression?: number,
-	resizeMode?: string
+	destPath: string
 ): Promise<string>
 
 /**

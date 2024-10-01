@@ -441,24 +441,8 @@ var RNFS = {
 	// Copies fotos from asset-library (camera-roll) to a specific location
 	// with a given width or height
 	// @see: https://developer.apple.com/reference/photos/phimagemanager/1616964-requestimageforasset
-	copyAssetsFileIOS(
-		imageUri: string,
-		destPath: string,
-		width: number,
-		height: number,
-		scale: number = 1.0,
-		compression: number = 1.0,
-		resizeMode: string = "contain"
-	): Promise<string> {
-		return RNFSManager.copyAssetsFileIOS(
-			imageUri,
-			destPath,
-			width,
-			height,
-			scale,
-			compression,
-			resizeMode
-		);
+	copyAssetsFileIOS(imageUri: string, destPath: string): Promise<string> {
+		return RNFSManager.copyAssetsFileIOS(imageUri, destPath);
 	},
 
 	// iOS only
