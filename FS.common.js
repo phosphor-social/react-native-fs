@@ -804,7 +804,6 @@ var RNFS = {
 			throw new Error("touch: Invalid value for argument `mtime`");
 		var ctimeTime = 0;
 		if (isIOS) {
-			// Modified to accommodate Windows
 			ctimeTime = ctime && ctime.getTime();
 		}
 		return RNFSManager.touch(
@@ -827,9 +826,7 @@ var RNFS = {
 	ExternalStorageDirectoryPath: RNFSManager.RNFSExternalStorageDirectoryPath,
 	TemporaryDirectoryPath: RNFSManager.RNFSTemporaryDirectoryPath,
 	LibraryDirectoryPath: RNFSManager.RNFSLibraryDirectoryPath,
-	PicturesDirectoryPath: RNFSManager.RNFSPicturesDirectoryPath, // For Windows
 	FileProtectionKeys: RNFSManager.RNFSFileProtectionKeys,
-	RoamingDirectoryPath: RNFSManager.RNFSRoamingDirectoryPath, // For Windows
 };
 
 module.exports = RNFS;

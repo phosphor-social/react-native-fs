@@ -1,5 +1,5 @@
 require 'json'
-pjson = JSON.parse(File.read('../package.json'))
+pjson = JSON.parse(File.read('package.json'))
 
 Pod::Spec.new do |s|
 
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   s.source          = { :git => "https://github.com/phosphor-social/react-native-fs", :tag => "v#{s.version}" }
-  s.source_files    = '*.{h,m}'
+  s.source_files    = 'ios/*.{h,m}'
   s.preserve_paths  = "**/*.js"
 
   s.dependency 'React-Core'

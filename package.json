@@ -1,11 +1,10 @@
 {
 	"name": "@phosphor-social/react-native-fs",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Native filesystem access for react-native. Based on itinance/react-native-fs, customized by @leurs247.",
 	"main": "FS.common.js",
 	"typings": "index.d.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"flow": "flow; test $? -eq 0 -o $? -eq 2"
 	},
 	"repository": {
@@ -35,13 +34,7 @@
 		"prop-types": "^15.7.2"
 	},
 	"peerDependencies": {
-		"react-native": "*",
-		"react-native-windows": "*"
-	},
-	"peerDependenciesMeta": {
-		"react-native-windows": {
-			"optional": true
-		}
+		"react-native": "*"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
