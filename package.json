@@ -42,5 +42,8 @@
 		"react-native-windows": {
 			"optional": true
 		}
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
 	}
 }
