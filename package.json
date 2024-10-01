@@ -1,6 +1,6 @@
 {
 	"name": "@phosphor-social/react-native-fs",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Native filesystem access for react-native. Based on itinance/react-native-fs, customized by @leurs247.",
 	"main": "FS.common.js",
 	"typings": "index.d.ts",
@@ -23,7 +23,7 @@
 		"upload",
 		"file-transfer"
 	],
-	"author": "Sam Leurs <samleurs@gmail.com> (https://github.com/leurs247)",
+	"author": "Johannes Lumpe <johannes@lum.pe> (https://github.com/itinance)",
 	"license": "MIT",
 	"dependencies": {
 		"base-64": "^0.1.0",
