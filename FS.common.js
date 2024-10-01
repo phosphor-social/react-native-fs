@@ -803,25 +803,15 @@ var RNFS = {
 		if (mtime && !(mtime instanceof Date))
 			throw new Error("touch: Invalid value for argument `mtime`");
 		var ctimeTime = 0;
-		if (isIOS || isWindows) {
+		if (isIOS) {
 			// Modified to accommodate Windows
 			ctimeTime = ctime && ctime.getTime();
 		}
-		if (isWindows) {
-			var modifyCreationTime = !ctime ? false : true;
-			return RNFSManager.touch(
-				normalizeFilePath(filepath),
-				mtime && mtime.getTime(),
-				ctimeTime,
-				modifyCreationTime
-			);
-		} else {
-			return RNFSManager.touch(
-				normalizeFilePath(filepath),
-				mtime && mtime.getTime(),
-				ctimeTime
-			);
-		}
+		return RNFSManager.touch(
+			normalizeFilePath(filepath),
+			mtime && mtime.getTime(),
+			ctimeTime
+		);
 	},
 
 	scanFile(path: string): Promise<ReadDirItem[]> {
